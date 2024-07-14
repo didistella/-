@@ -1,0 +1,55 @@
+import random
+from itertools import combinations
+
+n=7  #确定列表里有几个数字
+nums=random.sample(range(-10,10),n)  #随机生成包含n个数的列表，取值范围为[-10,10]
+print(nums)
+
+def product(A): #计算输入列表全部数字的乘积
+    outcome=1
+    for number in A:
+        outcome *= number
+    return outcome
+
+result=0
+for j in range(1,n+1): #确定每次乘积元素个数
+    l=[]
+    a=list(combinations(nums,j)) #确定挑选j个元素的所有组合
+    for item in a:   #计算所有组合的全部元素乘积
+        b=product(item)
+        l.append(b)  #将结果都存入列表里
+    if result<max(l):   #选择最大的结果
+        result=max(l) 
+    
+print(result)   #只输出最大乘积结果
+
+
+#增加输出使乘积最大的子数组
+import random
+from itertools import combinations
+
+n=7
+nums=random.sample(range(-10,10),n) #包含两个边界
+print("要计算的数组为："+str(nums))
+
+def product(A): #计算列表全部数字的乘积
+    outcome=1
+    for number in A:
+        outcome *= number
+    return outcome
+
+result=0
+for j in range(1,n+1): 
+    l=[]
+    a=list(combinations(nums,j))
+    for item in a:
+        b=product(item)
+        l.append(b)
+    if result<max(l):  #当原来的结果小于新的乘积结果时，执行以下操作
+        result=max(l)  #使结果等于新的乘积最大值
+        groups=[]      #这个列表是为了储存乘积结果为最大值的子数组
+        positions=[i for i,item in enumerate(l) if item==result]    #先找到最大值在所有乘积中的位置并记录下来（可能最大值不止一个，所以位置不止一个）
+        for position in positions:
+            groups.append(a[position])   #对于每一个位置，在a中找到对应的子数组，并添加到groups里
+
+print("乘积最大的子数组为："+str(groups)+", 结果为："+str(result)+".")
